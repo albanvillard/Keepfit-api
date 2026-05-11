@@ -10,5 +10,13 @@ class ClasseChallenge extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $guarded = [];
+    // On force Laravel à utiliser le bon nom de table
+    protected $table = 'classe_challenges';
+
+    // Les champs requis pour l'affectation
+    protected $fillable = [
+        'classe_id',
+        'challenge_id',
+        'date_inscription'
+    ];
 }

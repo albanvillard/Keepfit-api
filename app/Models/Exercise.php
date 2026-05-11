@@ -8,7 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Exercise extends Model
 {
-    use HasFactory, HasUuids; // On active les UUID ici aussi !
+    use HasFactory, HasUuids;
 
-    protected $guarded = []; // On autorise l'insertion
+    // Les champs modifiables de l'exercice
+    protected $fillable = [
+        'name', 
+        'description', 
+        'repetition'
+    ];
+
+    /**
+     * Un exercice peut être utilisé dans PLUSIEURS défis.
+     * Relation : One-to-Many
+     */
+    public function challenges()
+    {
+        return $this->hasMany(Challenge::class);
+    }
 }

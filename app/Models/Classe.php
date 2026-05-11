@@ -2,13 +2,28 @@
 
 namespace App\Models;
 
-// Dans les deux fichiers :
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Classe extends Model // Classe ou ClasseChallenge
+class Classe extends Model
 {
     use HasFactory, HasUuids;
-    protected $guarded = [];
+
+    // Les champs de base de ta table 'classes'
+    protected $fillable = [
+        'name',
+        'level'
+    ];
+
+    /**
+     * Une classe peut participer à PLUSIEURS défis.
+     * Relation : Many-to-Many
+     */
+    public function challenges()
+    {
+        return $this->belongsToMany(Challenge::class, 'classe_challenges')
+                    ->withPivot('date_inscription')
+                    ->withTimestamps();
+    }
 }
